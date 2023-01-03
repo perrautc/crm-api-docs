@@ -1,11 +1,423 @@
-# Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
+# Purpose
 
-## What is Nextra?
+The purpose of this document is to provide an overview of the REST APIs, their capabilities, describe the available endpoints, and provide sample code for handling common use cases.
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+## How to Run Examples
 
-## Documentation
+Examples for the API are written in HTTP, this allows for language agnostic examples. You're not expected to learn HTTP but if you look at the examples you may learn it anyways. To run the examples you can use Swagger, POSTMAN, VSCode or your preferred mechanism for making http request.
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+### Swagger
+
+Every site has a swagger endpoint exposed at https://{url}/swagger
+
+### Postman
+
+Postman can consume the swagger file exposed at https://{url}/swagger/current
+
+### VSCode Configuration
+
+vscode requires the vscode rest client [VSCode Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)
+
+## Getting Started
+
+There are a few items needed before you can use the REST API.
+
+| Step | Description                                                      | How                                                                                                              |
+| ---- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| 1    | Enable Web Services                                              | Email support                                                                                                    |
+| 2    | Create a user group where you can assign Web Services Capability | Tools > User Management, Edit/Create User Group                                                                  |
+| 3    | Ensure the user you intend to use is in the user group           | Tools > User Management, Edit/Add User                                                                           |
+| 4    | Enable API key for the API user                                  | Tools > User Management, Edit User, Enable API Key                                                               |
+| 5    | Copy the API key                                                 | Copy API Key to clipboard                                                                                        |
+| 6    | Get your Base URL                                                | Base URL will be https://schema.dealcloud.com / https://schema.dealcloud.eu / https://schema.oneplace.intapp.com |
+| 7    | Access Swagger                                                   | https://{{baseurl}}/swagger                                                                                      |
+
+Table: Steps to Enable API
+
+The API key should be a JSON object.
+
+```json
+{
+  "apiKey": {
+    "clientId": 1234,
+    "apiKey": "6kyDCYa1pb-9gVKvjFdCs5T2XOwly0n_eW3HgAs1"
+  }
+}
+```
+
+## Quick Start Guide
+
+The quick start guide is intended to get you started with the API as quickly as possible. There are more in-depth explanations of key concepts further in the document.
+
+You will need the following items to follow along:
+
+1. A site with web services enabled.
+2. A user with access to Web Services.
+3. Client Id and Secret for a user who is in a group with web services capabilities
+
+If you do not have the items listed above please contact your site admin or support.
+
+1. [How To Generate Tokens](###How-To-Generate-Tokens)
+2. [What is a Site Schema](###What-Is-A-Site-Schema)
+3. [Create Read Update Delete](###Create-Read-Update-Delete)
+4. [Working with Bulk Data](###Working-With-Bulk-Data)
+5. [Filtering](###Filtering)
+6. [Binary](###Binary)
+
+### How To Generate Tokens
+
+To generate a token make a request against the /token endpoint. You can pass values in the body of the request or you can pass clientId and secret in the header as base65 encoded values. You'll need the access_token returned to use in your bearer token. There are multiple scopes supported by the API, view the section on Tokens for the full write-up.
+
+**Request**
+
+```http
+POST {{baseUrl}}/api/rest/v1/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+scope=data
+&grant_type=client_credentials
+&client_id=106
+&client_secret=1356GYNU
+```
+
+**Response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiI...",
+  "token_type": "bearer",
+  "expires_in": 1199,
+  "refresh_token": "eyJhbGciOiJIUzI1Ni..."
+}
+```
+
+**Example Authorization Header**
+
+`Authorization: Bearer {access_token}`
+
+### What is a Site Schema
+
+When we think of the CRM, it is composed of Entries and Fields. The schema full ORD of a given site. The schema API provides endpoints to help you understand a site's configuration. Objects such as Contacts, Companies etc.. are all entry types in the CRM. Calling the Schema API entry types endpoint returns all entry types for a given site. Each entry type can have 1 or more fields, once again the are several endpoints in the Schema API to provide information about:
+
+- Fields for a given entry
+- All fields in a given site
+- All available field types
+- Properties of certain fields
+
+Before working with the data it is important to understand the entry types you which to work with and the fields configured on each of those entry types as this impacts how the data will be serialized.
+
+**Example**
+
+1. Discovering Entry Types. We can see that the site for this example has among its entry types `Campaign Group, Campaign, Company`
+
+```HTTP
+GET {{host}}/api/rest/v4/schema/entryTypes HTTP/1.1
+```
+
+```json
+[
+  {
+    "apiName": "CampaignGroup",
+    "singularName": "Campaign Group",
+    "pluralName": "Campaign Groups",
+    "entryListType": 1,
+    "entryListSubType": 15,
+    "id": 19624,
+    "name": "Campaign Group",
+    "entryListId": -5
+  },
+  {
+    "apiName": "Campaign",
+    "singularName": "Campaign",
+    "pluralName": "Campaigns",
+    "entryListType": 1,
+    "entryListSubType": 14,
+    "id": 19633,
+    "name": "Campaign",
+    "entryListId": -5
+  },
+  {
+    "apiName": "Company",
+    "singularName": "Company",
+    "pluralName": "Companies",
+    "entryListType": 1,
+    "entryListSubType": 12,
+    "id": 2014,
+    "name": "Company",
+    "entryListId": -5
+  },
+  ...
+```
+
+2. Working with the entry type called Company to discover its fields. You can either use the `apiName` or the `id` to identify a entry type. Both method produces the same response.
+
+**Using id**
+
+```HTTP
+GET {{host}}/api/rest/v4/schema/entryTypes/2014/fields HTTP/1.1
+```
+
+**Using apiName**
+
+```HTTP
+GET {{host}}/api/rest/v4/schema/entryTypes/company/fields HTTP/1.1
+```
+
+**Response**
+
+```json
+[
+  {
+    "apiName": "CompanyName",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": false,
+    "warnOnNearDuplicates": true,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 9,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2300,
+    "name": "Company Name",
+    "entryListId": 2014
+  },
+  {
+    "apiName": "Address",
+    "fieldType": 1,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2227,
+    "name": "Address",
+    "entryListId": 2014
+  },
+  {
+    "apiName": "LastInteraction",
+    "fieldType": 5,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "choiceFieldId": 17,
+    "choiceOrder": 2,
+    "entryLists": [
+      2012,
+      2013
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": false,
+    "id": 2249,
+    "name": "Last Interaction",
+    "entryListId": 2014
+  },
+  {
+    "apiName": "LastInteractionDate",
+    "fieldType": 4,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "choiceFieldId": 17,
+    "choiceOrder": 1,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": false,
+    "id": 2248,
+    "name": "Last Interaction Date",
+    "entryListId": 2014
+  },
+  ...
+```
+
+A full explanation about all the endpoints of the Schema API is available in the Schema section of this document.
+
+### Create Read Update Delete
+
+Continuing with the `company` entry type from the previous example we know that company has many fields four of which are `CompanyName, Address, LastInteraction, LastInteractionDate` we also know properties of these fields `fieldType, isCalculated, entryLists, isStoreRequestSupported` (a full writeup about field Types and field properties in the Field Types section)
+
+The key thing to know right now is that you're not able to write to calculated fields, but a easier indicator that you will not be able to post new information to a field is to use the `isStoreRequestSupported` flag. So for `Company` for this given site, you're not going to be able to update `last interaction` or `last interaction date` both of these are calculated. You are able to get the data but you cannot directly modify it.
+
+**Creating a new Company**
+
+When creating a new entry you must provide a invalid EntryId, the best strategy is to use negative numbers, as valid EntryId are always positive integers. Both calls below are equivalent, when working with data you can either work with them using key-value pairs or as row objects. When working with key-value pairs, you must use the integer id for `fields`
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+Content-Type: application/json
+
+[{
+  "EntryId": -1,
+  "CompanyName": "New Company",
+  "Address": "123 New Location"
+}]
+```
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}}
+Content-Type: application/json
+Authorization: {{auth}}
+
+{
+  "storeRequests": [
+    {
+      "value": "New Company",
+      "ignoreNearDups": true,
+      "entryId": -1,
+      "fieldId": 2300
+    },
+    {
+      "value": "123 New Location",
+      "ignoreNearDups": true,
+      "entryId": -1,
+      "fieldId": 2227
+    }
+  ]
+}
+```
+
+### Working with Bulk Data
+
+Both method of working with data support bulk operations. The rows method allows for up to 1000 entries to be created at once, while the cells method allows for up to 10_000 fields to be updated at a time. When working with a batch you're able to create references within a batch, so for example if `New Company` is the parent company of `New Company 2` you're able to create a reference using the batch ids if the data is not yet persisted in the database.
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+Content-Type: application/json
+
+[{
+  "EntryId": -1,
+  "CompanyName": "New Company",
+  "Address": "123 New Location"
+},
+{
+  "EntryId": -2,
+  "CompanyName": "New Company 2",
+  "Address": "123 New Location 2",
+  "ParentCompany": -1
+}]
+```
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}}
+Content-Type: application/json
+Authorization: {{auth}}
+
+{
+  "storeRequests": [
+    {
+      "value": "New Company",
+      "ignoreNearDups": true,
+      "entryId": -1,
+      "fieldId": 2300
+    },
+    {
+      "value": "123 New Location",
+      "ignoreNearDups": true,
+      "entryId": -1,
+      "fieldId": 2227
+    },
+        {
+      "value": "New Company 2",
+      "ignoreNearDups": true,
+      "entryId": -2,
+      "fieldId": 2300
+    },
+    {
+      "value": "123 New Location 2",
+      "ignoreNearDups": true,
+      "entryId": -2,
+      "fieldId": 2227
+    },
+    ,
+    {
+      "value": -1,
+      "ignoreNearDups": true,
+      "entryId": -2,
+      "fieldId": 2230
+    }
+  ]
+}
+```
+
+**Update**
+
+The only difference between creating and updating entries is that when you update an entry you need to use the valid entry id, and you'll call the `PUT` endpoint when updating using the key-value cells api, and the `PATCH` endpoint when using the object based rows api.
+
+**Reading**
+
+Reading information works much the same way as creating and updating information. In the `cells` api you must specify the entries and fields you wish to return, in the `rows` api you can specify this information. Omitting this information returns all data.
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}}
+```
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/get
+?wrapIntoArrays=true
+Content-Type: application/json
+Authorization: {{auth}}
+[
+  {
+    "entryId": 2772624,
+    "fieldId": 2300
+  },
+  {
+    "entryId": 2772624,
+    "fieldId": 2227
+  }
+]
+```
+
+### Filtering
+
+Filtering is a complex subject a full write up can be seen in the filtering section
+
+### Binary
+
+When working with binary files you have to use the cells API. The fieldId used in the binaryStoreRequest should be of type 13 or 16.
+
+```http
+POST {{baseUrl}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="model"
+Content-Type: application/json
+{
+    "binaryStoreRequests": [
+        {
+            "formatType": "jpg",
+            "contentType": "image/jpg",
+            "name": "Headshot.jpg",
+            "entryId": -1,
+            "fieldId": 9569
+        }
+    ]
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="attachment"; filename="Headshot.jpg"
+Content-Type: image/jpg
+< ./1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```
