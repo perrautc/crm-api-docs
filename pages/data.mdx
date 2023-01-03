@@ -1,0 +1,28 @@
+# Data APIs
+
+The Data APIs are designed to work with data in the system. These APIs support full CRUD operations of all data, except for User and Marketing Activities. To get the most out of the data APIs you are expected to understand the site's schema, expecially the schema of the entry types you're working with. A full description the Schema is available in the Schema section of this document.
+
+If you need to work with users (i.e. adding user, removing users, user permissions etc..) view user management. Extra user attributes, office location, job titles etc... are considered data and can be updated using the data API.
+
+There are 2 methods of working with the API:
+* Cells - Key-Value
+* Rows - Objects.
+
+## Proxy
+
+All Data endpoints supports delegation. When making a data request, if you wish to delegate the action as another user you can add a `As-User` modifier to the header of the request.
+
+**Important**
+
+1. You're only able to delegate requests to users whom you've been granted access to proxy as.
+2. You'll need to know the user's unique identifier.
+
+```http
+GET {{baseUrl}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+AS-USER: 6045
+```
+
+## Limits
+
+Requests to the Data APIs are limited to 5 call per second.

@@ -1,0 +1,15 @@
+# Schema APIs
+
+The Schema APIs are designed to help you understand the site. A site is composed of Entry types, and each entry Type contains 1 or more fields. 
+
+Entry types can be thought of as Tables in a tradition database construct. Examples of entry types you may see in a site are Company, Contact etc. Entry types can have many fields, the site has a limited number of fieldTypes, but a entryType can have as many fields and fieldType combination as is required by the business.
+
+Fields can be thought of as Columns in a traditional database construct. Fields are where data is stored. When working with the API you will need to know how to serialize and deserialize data based on the fieldType used to store the information.
+
+Using the schema API, you will be able to determine the full Schema of a given site. This includes all entry types, all fields for a given entrytype, all relationships between entry types
+
+Along with EntryTypes and Fields, the Schema APIs also contains endpoints for other system level information that would be important for successful API integrations. These endpoints expose all currencies supported by the system, all users for a given site, and all filter operations.
+
+## Limits
+
+Requests to the Schema APIs are limited to 5 call per second.

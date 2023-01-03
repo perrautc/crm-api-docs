@@ -1,0 +1,337 @@
+# Token
+
+CRM uses Oauth2 Client Credentials to generate tokens. Tokens have a 15 minutes expiry. The token endpoint returns a access token which can be used against all other endpoints.
+
+## Authentication
+
+Your Client Id and Secret are needed to generate a Token. All endpoints on the API requires a valid token. Tokens are only valid for 15 minutes any integration will need to have the ability to generate tokens and regenerate token if the process will run for more than 15 minutes.
+
+## Scopes
+
+When generating a token you need to provide a scope. The API supports 3 scopes (data, user_management, provider_sync), these can be combined if needed. The caption below indicates which scope is needed for each functional area. For most request data is the appropriate scope needed. The scope will not provide more capability then the user account has within the platform. <br>
+
+![Token Diagram](img/token-diagram.png) <br>
+
+| Scope           | Description                                                                                                   |
+| --------------- | ------------------------------------------------------------------------------------------------------------- |
+| user_management | This scope is used when working with the user management APIs.                                                |
+| data            | This scope is used when working with the schema and data APIs. For most API requests, this is the scope needed |
+| publish         | This scope is used when working with the publication APIs.                                                    |
+## Limits
+
+Requests to the token API are limited to 30 calls per hour per user.
+
+## Examples
+### HTTP
+
+**Request**
+
+```
+POST {{baseUrl}}/api/rest/v1/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+scope=data
+&grant_type=client_credentials
+&client_id=106
+&client_secret=1356GYNU
+```
+
+**Response**
+
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiI...",
+  "token_type": "bearer",
+  "expires_in": 1199,
+  "refresh_token": "eyJhbGciOiJIUzI1Ni..."
+}
+```
+## Code Snippets
+Code snippets from popular programming languages.
+### C#
+
+**Request**
+
+```
+var client = new HttpClient();
+var request = new HttpRequestMessage
+{
+    Method = HttpMethod.Post,
+    RequestUri = new Uri("https://site.dealcloud.com/api/rest/v1/oauth/token"),
+    Headers =
+    {
+        { "user-agent", "vscode-restclient" },
+    },
+    Content = new FormUrlEncodedContent(new Dictionary<string, string>
+    {
+        { "scope", "data" },
+        { "grant_type", "client_credentials" },
+        { "client_id", "106" },
+        { "client_secret", "1356GYNU" },
+    }),
+};
+using (var response = await client.SendAsync(request))
+{
+    response.EnsureSuccessStatusCode();
+    var body = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(body);
+}
+```
+### Go
+
+```
+package main
+
+import (
+	"fmt"
+	"strings"
+	"net/http"
+	"io/ioutil"
+)
+
+func main() {
+
+	url := "https://site.dealcloud.com/api/rest/v1/oauth/token"
+
+	payload := strings.NewReader("scope=data&grant_type=client_credentials
+  &client_id=106&client_secret=1356GYNUg3eyOQtw")
+
+	req, _ := http.NewRequest("POST", url, payload)
+
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
+
+	res, _ := http.DefaultClient.Do(req)
+
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
+	fmt.Println(res)
+	fmt.Println(string(body))
+
+}
+```
+
+### Java
+
+**Unirest**
+
+```
+HttpResponse<String> response = Unirest
+  .post("https://site.dealcloud.com/api/rest/v1/oauth/token")
+  .header("content-type", "application/x-www-form-urlencoded")
+  .body("scope=data&grant_type=client_credentials&client_id=106
+  &client_secret=1356GYNUg")
+  .asString();
+```
+
+**Standard**
+
+```
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(
+      URI.create("https://site.dealcloud.com/api/rest/v1/oauth/token")
+      )
+    .header("content-type", "application/x-www-form-urlencoded")
+    .method("POST", HttpRequest.BodyPublishers.ofString("scope=data
+    &grant_type=client_credentials&client_id=106&client_secret=1356GYNU"))
+    .build();
+HttpResponse<String> response = HttpClient.newHttpClient().send(request, 
+HttpResponse.BodyHandlers.ofString());
+System.out.println(response.body());
+```
+
+### Javascript | Nodejs
+
+**Axios**
+
+```
+import axios from "axios";
+
+const options = {
+  method: 'POST',
+  url: 'https://site.dealcloud.com/api/rest/v1/oauth/token',
+  headers: {
+    'content-type': 'application/x-www-form-urlencoded'
+  },
+  data: {
+    scope: 'data',
+    grant_type: 'client_credentials',
+    client_id: '106',
+    client_secret: '1356GYNU'
+  }
+};
+
+axios.request(options).then(function (response) {
+  console.log(response.data);
+}).catch(function (error) {
+  console.error(error);
+});
+```
+
+**fetch**
+
+```
+fetch("https://site.dealcloud.com/api/rest/v1/oauth/token", {
+  "method": "POST",
+  "headers": {
+    "content-type": "application/x-www-form-urlencoded"
+  },
+  "body": {
+    "scope": "data",
+    "grant_type": "client_credentials",
+    "client_id": "106",
+    "client_secret": "1356GYNU"
+  }
+})
+.then(response => {
+  console.log(response);
+})
+.catch(err => {
+  console.error(err);
+});
+```
+
+**XHRHttpRequest**
+
+```
+const data = "scope=data&grant_type=client_credentials&client_id=106
+&client_secret=1356GYNU";
+
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "https://site.dealcloud.com/api/rest/v1/oauth/token");
+xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+
+xhr.send(data);
+```
+
+### OCaml
+
+**CoHTTP**
+
+```
+open Cohttp_lwt_unix
+open Cohttp
+open Lwt
+
+let uri = Uri.of_string "https://site.dealcloud.com/api/rest/v1/oauth/token" in
+let headers = Header.add_list (Header.init ()) [
+  ("content-type", "application/x-www-form-urlencoded");
+] in
+let body = Cohttp_lwt_body.of_string "scope=data&grant_type=client_credentials
+&client_id=106&client_secret=1356GYNU" in
+
+Client.call ~headers ~body `POST uri
+>>= fun (res, body_stream) ->
+  (* Do stuff with the result *)
+```
+
+### PHP
+
+```
+<?php
+
+$client = new http\Client;
+$request = new http\Client\Request;
+
+$body = new http\Message\Body;
+$body->append(new http\QueryString([
+  'scope' => 'data',
+  'grant_type' => 'client_credentials',
+  'client_id' => '106',
+  'client_secret' => '1356GYNU'
+]));
+
+$request->setRequestUrl(
+  'https://site.dealcloud.com/api/rest/v1/oauth/token');
+$request->setRequestMethod('POST');
+$request->setBody($body);
+
+$request->setHeaders([
+  'content-type' => 'application/x-www-form-urlencoded'
+]);
+
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+
+echo $response->getBody();
+?>
+```
+
+### PowerShell
+
+```
+$headers=@{}
+$headers.Add("content-type", "application/x-www-form-urlencoded")
+$response = Invoke-RestMethod -Uri 'https://site.dealcloud.com/api/rest/v1/oauth/token' -Method POST -Headers $headers -ContentType 'application/x-www-form-urlencoded' -Body 'scope=data&grant_type=client_credentials
+&client_id=106&client_secret=1356GYNU'
+
+```
+
+### Python
+
+**http.client**
+
+```
+import http.client
+
+conn = http.client.HTTPSConnection("site.dealcloud.com")
+
+payload = "scope=data&grant_type=client_credentials&client_id=106
+&client_secret=1356GYNU"
+
+headers = {
+    'content-type': "application/x-www-form-urlencoded"
+    }
+
+conn.request("POST", "/api/rest/v1/oauth/token", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
+print(data.decode("utf-8"))
+```
+
+**requests**
+
+```
+import requests
+
+url = "https://site.dealcloud.com/api/rest/v1/oauth/token"
+
+payload = "scope=data&grant_type=client_credentials&client_id=106
+&client_secret=1356GYNU"
+headers = {
+    'content-type': "application/x-www-form-urlencoded"
+    }
+
+response = requests.request("POST", url, data=payload, headers=headers)
+
+print(response.text)
+```
+
+### R
+
+**httr**
+
+```
+library(httr)
+
+url <- "https://site.dealcloud.com/api/rest/v1/oauth/token"
+
+payload <- "scope=data&grant_type=client_credentials&client_id=106
+&client_secret=1356GYNU"
+
+encode <- "form"
+
+response <- VERB("POST", url, body = payload, content_type("application/x-www-form-urlencoded"), encode = encode)
+
+content(response, "text")
+```

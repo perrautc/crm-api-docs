@@ -1,0 +1,78 @@
+# Marketing API
+
+The marketing API works with dispatch lists.
+
+## Activities
+
+Creating activities requires 3 steps:
+
+1. Create Activity ID, this links a contact to a campaign
+2. Get Activity ID, the ID of an activity can be used to submit various activity types for a given contact and campaign
+3. Patch calls with Activity ID as externalrecipient ID.
+
+**Create Activity IDs**
+
+Can create multiple activity at a time. This will generate activity Ids which you will need when updating activities.
+
+```
+POST {{baseUrl}}/api/v1/eMarketing/activity 
+Content-Type: application/json
+Authorization: {{auth}}
+
+[
+  {
+    "communicationId": 46210,
+    "contactId": 2007
+  }
+]
+```
+
+**Get Activity Id**
+
+```
+GET {{baseUrl}}/api/v1/eMarketing/activity
+    ?contactId=2007
+    &communicationId=46210
+Authorization: {{auth}}
+```
+
+**Update Activity**
+
+externalRecipientId is the Id of the activity you'd like to update.
+
+Timestamp should be unique, best to use a unix timestamp.
+
+Activity Type can be any of the activity types listed below
+
+```
+PATCH {{baseUrl}}/api/v1/eMarketing/activity 
+Content-Type: application/json
+Authorization: {{auth}}
+
+[
+  {
+    "externalRecipientId": 2,
+    "externalEventId": "string3",
+    "communicationId": 46210,
+    "activityType": "click",
+    "description": "string",
+    "timestamp": "1607572610",
+    "summary": "string"
+  }
+]
+```
+
+
+**Activity Types**
+
+* Processed
+* Dropped
+* Delivered
+* Deferred
+* Blocked
+* Bounce
+* Open
+* Click
+* Spam Report
+* Unsubscribe
+* Page View

@@ -1,0 +1,100 @@
+# Backups
+
+Using these APIs you're able to get a list of all backups, create a new backup, download a backup and delete a backup.
+
+## Requesting a backup
+
+When requesting a backup, you can specify the following parameters:
+
+| Parameter  | Description                                                              | is required |
+| ---------- | ------------------------------------------------------------------------ | ----------- |
+| `fromDate` | The date from which `binary` backup should be created.                   | Yes         |
+| `ids`      | A list of ids of the objects that should be included in the backup.      | No          |
+| `apiNames` | A list of apiNames of the objects that should be included in the backup. | No          |
+
+
+By default, the backup will be created for all objects. Can choose to identify objects by ID or by apiName.
+
+### Example All Objects
+
+```json
+{
+  "fromDate": "2018-01-01T00:00:00.000Z",
+}
+```
+
+### Example IDs
+
+```json
+{
+  "fromDate": "2018-01-01T00:00:00.000Z",
+  "ids": [1, 2, 3]
+}
+```
+
+### Example apiNames
+
+```json
+{
+  "fromDate": "2018-01-01T00:00:00.000Z",
+  "apiNames": ["account", "contact"]
+}
+```
+### Example HTTP Request
+
+```
+POST {{host}}/api/rest/v4/backups/request HTTP/1.1
+Authorization: {{auth}}
+Content-Type: application/json
+
+{
+  "fromDate": "2018-01-01T00:00:00.000Z",
+  "ids": [1, 2, 3]
+}
+```
+### Example Response
+
+```http
+HTTP/1.1 204 No Content
+```
+
+## Listing backups
+
+You can view a list of all backups that have been created. Backups are kept for a limited period of time.
+
+### Example HTTP Request
+
+```http
+GET {{host}}/api/rest/v4/backups HTTP/1.1
+```
+
+### Example Response
+
+```
+HTTP/1.1 200 OK
+
+[
+"2018-01-01_Test_Site_1.zip",
+"2019-01-01_Test_Site_1.zip",
+"2019-01-02_Test_Site_1.zip"
+]
+```
+## Downloading a backup
+
+You can download a backup by specifying the name of the backup without the .zip extension.
+
+### Example HTTP Request
+
+```
+GET {{host}}/api/rest/v4/backups/2018-01-01_Test_Site_1 HTTP/1.1
+```
+
+## Deleting a backup
+
+You can delete a backup by specifying the name of the backup without the .zip extension.
+
+### Example HTTP Request
+
+```
+POST {{host}}/api/rest/v4/backups/delete/2018-01-01_Test_Site_1 HTTP/1.1
+```

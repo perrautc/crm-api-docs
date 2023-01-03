@@ -1,7 +1,12 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
+  "token": "Authentication",
+  "schema": "Site Schema",
+  "data": "Data",
+  "user_management": "User Management",
+  "backups": "Backups",
+  "publications": "Publications",
+  "marketing": "Marketing",
   "about": {
     "title": "About",
     "type": "page"
@@ -9,7 +14,7 @@
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://app.dealcloud.com",
     "newWindow": true
   }
 }
