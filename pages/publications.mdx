@@ -67,7 +67,7 @@ There is a new scope for publication tokens `publish`. You must provide that as 
 **Request**
 
 ```
-POST {{baseUrl}}/api/rest/v1/oauth/token
+POST {baseUrl}/api/rest/v1/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
 scope=publish
@@ -83,7 +83,7 @@ Return Names of topics currently being published. *These names can be determined
 **Request**
 
 ```
-GET {{pubUrl}}/api/rest/v1/publication/topics
+GET {pubUrl}/api/rest/v1/publication/topics
 Authorization: {{auth}}
 ```
 
@@ -130,7 +130,7 @@ Schema events include the following updates:
    3. Delete
 **Request**
 ```
-POST {{pubUrl}}/{{poll}}
+POST {pubUrl}/{{poll}}
 Authorization: {{auth}}
 Content-Type: application/json
 
@@ -159,7 +159,7 @@ Acknowledging a message will set the paging. If you do not acknowledge the messa
 
 **Request**
 ```
-POST {{pubUrl}}/api/rest/v1/publication/acknowledge
+POST {pubUrl}/api/rest/v1/publication/acknowledge
 Authorization: {{auth}}
 Content-Type: application/json
 

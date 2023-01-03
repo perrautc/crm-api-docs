@@ -43,7 +43,7 @@ By default, the backup will be created for all objects. Can choose to identify o
 ### Example HTTP Request
 
 ```
-POST {{host}}/api/rest/v4/backups/request HTTP/1.1
+POST {host}/api/rest/v4/backups/request HTTP/1.1
 Authorization: {{auth}}
 Content-Type: application/json
 
@@ -64,8 +64,8 @@ You can view a list of all backups that have been created. Backups are kept for 
 
 ### Example HTTP Request
 
-```http
-GET {{host}}/api/rest/v4/backups HTTP/1.1
+```
+GET {host}/api/rest/v4/backups HTTP/1.1
 ```
 
 ### Example Response
@@ -86,7 +86,7 @@ You can download a backup by specifying the name of the backup without the .zip 
 ### Example HTTP Request
 
 ```
-GET {{host}}/api/rest/v4/backups/2018-01-01_Test_Site_1 HTTP/1.1
+GET {host}/api/rest/v4/backups/2018-01-01_Test_Site_1 HTTP/1.1
 ```
 
 ## Deleting a backup
@@ -96,5 +96,5 @@ You can delete a backup by specifying the name of the backup without the .zip ex
 ### Example HTTP Request
 
 ```
-POST {{host}}/api/rest/v4/backups/delete/2018-01-01_Test_Site_1 HTTP/1.1
+POST {host}/api/rest/v4/backups/delete/2018-01-01_Test_Site_1 HTTP/1.1
 ```

@@ -15,7 +15,7 @@ Creating activities requires 3 steps:
 Can create multiple activity at a time. This will generate activity Ids which you will need when updating activities.
 
 ```
-POST {{baseUrl}}/api/v1/eMarketing/activity 
+POST {baseUrl}/api/v1/eMarketing/activity 
 Content-Type: application/json
 Authorization: {{auth}}
 
@@ -30,7 +30,7 @@ Authorization: {{auth}}
 **Get Activity Id**
 
 ```
-GET {{baseUrl}}/api/v1/eMarketing/activity
+GET {baseUrl}/api/v1/eMarketing/activity
     ?contactId=2007
     &communicationId=46210
 Authorization: {{auth}}
@@ -45,7 +45,7 @@ Timestamp should be unique, best to use a unix timestamp.
 Activity Type can be any of the activity types listed below
 
 ```
-PATCH {{baseUrl}}/api/v1/eMarketing/activity 
+PATCH {baseUrl}/api/v1/eMarketing/activity 
 Content-Type: application/json
 Authorization: {{auth}}
 
