@@ -3,7 +3,7 @@
   "token": "Authentication",
   "schema": "Site Schema",
   "data": "Data",
-  "user_management": "User Management",
+  "usermanagement": "User Management",
   "backups": "Backups",
   "publications": "Publications",
   "marketing": "Marketing",

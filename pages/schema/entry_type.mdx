@@ -1,0 +1,35 @@
+# Entry Type
+
+Returns details for a entry type based on the Id.
+
+## Swagger
+
+![Entry Type](./entry_type_id.png)
+
+## Params
+
+| name | type  | values |
+| ---- | ----- | ------ |
+| id   | query | int    |
+
+## Request
+
+```
+GET {{host}}/api/rest/v4/schema/entryTypes/{{entryTypeId}}
+Authorization: {{auth}}
+```
+
+## Response
+
+```json
+{
+  "apiName": "Interaction",
+  "singularName": "Interaction",
+  "pluralName": "Interactions",
+  "entryListType": 4,
+  "entryListSubType": 11,
+  "id": 2013,
+  "name": "Interaction",
+  "entryListId": -5
+}
+```

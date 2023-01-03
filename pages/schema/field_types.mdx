@@ -1,0 +1,1688 @@
+## Field Types
+
+Returns all field types supported by the system. When working with the API you may encounter a collection of these field types. Data are stored in fields with one of these types.
+
+**Params**
+
+| name | type | values |
+| ---- | ---- | ------ |
+| -    | -    | -      |
+
+**Request**
+
+```http
+GET {{host}}/api/rest/v4/schema/fieldtypes
+Authorization: {{auth}}
+```
+
+**Response**
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Text",
+    "entryListId": 0
+  },
+  {
+    "id": 2,
+    "name": "Choice",
+    "entryListId": 0
+  },
+  {
+    "id": 3,
+    "name": "Number",
+    "entryListId": 0
+  },
+  {
+    "id": 4,
+    "name": "Date",
+    "entryListId": 0
+  },
+  {
+    "id": 5,
+    "name": "Reference",
+    "entryListId": 0
+  },
+  {
+    "id": 6,
+    "name": "Boolean",
+    "entryListId": 0
+  },
+  {
+    "id": 7,
+    "name": "User",
+    "entryListId": 0
+  },
+  {
+    "id": 13,
+    "name": "Binary",
+    "entryListId": 0
+  },
+  {
+    "id": 14,
+    "name": "EntryListId",
+    "entryListId": 0
+  },
+  {
+    "id": 15,
+    "name": "Counter",
+    "entryListId": 0
+  },
+  {
+    "id": 16,
+    "name": "Image",
+    "entryListId": 0
+  },
+  {
+    "id": 17,
+    "name": "DataSource",
+    "entryListId": 0
+  },
+  {
+    "id": 18,
+    "name": "Currency",
+    "entryListId": 0
+  }
+]
+```
+
+### Primary Key
+
+Every entry type has 1 primary key. The primary key is a text field, the value may be calculated. When the primary key is not calculated its value can be updated like any other text field. However, when requesting the value of the primary key it is always presented as a complex object.
+
+**Schema: Primary Key**
+
+```json
+{
+  "apiName": "Name",
+  "fieldType": 1,
+  "isRequired": true,
+  "allowDuplicates": false,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": false,
+  "entryLists": [],
+  "systemFieldType": 9,
+  "isKey": false,
+  "isCalculated": false,
+  "isAttachment": false,
+  "isStoreRequestSupported": true,
+  "id": 22247,
+  "name": "Name",
+  "entryListId": 22246
+}
+```
+
+#### Cells
+
+**Requests**
+
+GET
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22255
+}
+```
+
+POST | PUT
+
+```json
+{
+  "value": "Company 1",
+  "ignoreNearDups": true,
+  "entryId": 3079558,
+  "fieldId": 22255
+}
+```
+
+**Responses**
+GET | POST | PUT
+
+```json
+  {
+    "entryId": 3079558,
+    "rowId": 3079558, (Excluded on GET)
+    "fieldId": 22247,
+    "isNoData": false,
+    "value": {
+      "id": 3079558,
+      "name": "Test 1",
+      "entryListId": 22246
+    }
+  }
+```
+
+#### Rows
+
+**Requests**
+
+POST | PATCH
+
+```json
+{
+  "EntryId": 3079558,
+  "CompanyName": "Company 1"
+}
+```
+
+**Responses**
+
+GET | POST | PATCH
+
+```json
+{
+  "EntryId": 3079558,
+  "CompanyName": {
+    "type": 0,
+    "id": 3079558,
+    "name": "Company 1",
+    "entryListId": 22246
+  }
+}
+```
+
+### Text
+
+The most common field type, used to store string values. There are several sub-types of text fields (single line, multi-line, URL, rich-text, phone). The sub-type affects how the field is displayed in the UI and does not change the field JSON properties. Strings are stored as HTML encoded values. If you submit a string value it will be HTML encoded before saving. When searching for a string value we escaped. You should HTML encode values before submitting, if not values will be automatically encoded before saving. Returned string values are HTML encoded and should be decoded to get the actual string values.
+
+**Schema: Text Field**
+
+```json
+{
+  "apiName": "TextEmail",
+  "fieldType": 1,
+  "isRequired": false,
+  "allowDuplicates": true,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": false,
+  "entryLists": [],
+  "systemFieldType": 0,
+  "isKey": false,
+  "isCalculated": false,
+  "isAttachment": false,
+  "isStoreRequestSupported": true,
+  "id": 22255,
+  "name": "Text Email",
+  "entryListId": 22246
+}
+```
+
+#### Cells
+
+**Requests**
+
+GET
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22255
+}
+```
+
+POST or PUT
+
+```json
+{
+  "value": "Test@email.com",
+  "ignoreNearDups": true,
+  "entryId": 2034,
+  "fieldId": 22255
+}
+```
+
+**Responses**
+GET | POST | PUT
+On a POST request the entryId would be a negative number while the rowId will be the actual unique EntryId. On PUT calls both rowId and entryId are the same. rowId is not included on requests where the data is not modified.
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22255,
+  "rowId": 3079558,
+  "isNoData": false,
+  "value": "Test@email.com"
+}
+```
+
+#### Rows
+
+**Requests**
+
+POST | PATCH
+
+```json
+{
+  "EntryId": 3079558,
+  "TextEmail": "Test@email.com"
+}
+```
+
+**Responses**
+
+GET | POST | PATCH | PUT
+Texts fields always return a flat string value except when the text field is the primary key for the entryType. View Section on Primary Key to see how primary keys are returned.
+
+```json
+{
+  "EntryId": 3079558,
+  "TextEmail": "Test@email.com"
+}
+```
+
+### Choice
+
+Choice fields allows you to create pick lists. Choice fields can be chained together to create multi-level dependencies. Choice fields can be single select or multi-select. All available options for a choice field is displayed in the field schema. You're able to append new choice options via the Schema API. When updating or modifying a choice value you must pass the ID of the choice option, when passing multiple values use an array of integers.
+
+**Schema: Choice Field**
+
+```json
+{
+  "apiName": "ChoiceLevel1",
+  "fieldType": 2,
+  "isRequired": false,
+  "allowDuplicates": true,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": true,
+  "choiceFieldId": 3347,
+  "choiceOrder": 1,
+  "entryLists": [],
+  "systemFieldType": 0,
+  "choiceValues": [
+    {
+      "seqNumber": 1,
+      "id": 3079556,
+      "name": "One",
+      "entryListId": -6
+    },
+    {
+      "seqNumber": 2,
+      "id": 3079555,
+      "name": "Two",
+      "entryListId": -6
+    }
+  ]
+}
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22259
+}
+```
+
+POST | PUT
+
+```json
+{
+  "value": 3079556,
+  "ignoreNearDups": true,
+  "entryId": 3079558,
+  "fieldId": 22259
+},
+{
+  "value": [3079556, 3079555], (Multiple Values)
+  "ignoreNearDups": true,
+  "entryId": 3079559,
+  "fieldId": 22259
+},
+{
+  "value": [3079555], (Single Value as Array)
+  "ignoreNearDups": true,
+  "entryId": 3079560,
+  "fieldId": 22259
+}
+```
+
+**Response**
+
+GET
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22259,
+    "rowId": 23983873,
+    "isNoData": false,
+    "value": {
+      "seqNumber": 1,
+      "id": 3079556,
+      "name": "One",
+      "entryListId": -6
+    }
+  }
+]
+```
+
+POST | PUT
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22259,
+    "rowId": 3079558,
+    "isNoData": false,
+    "value": [3079556]
+  }
+]
+```
+
+#### Rows
+
+**Request**
+
+POST | PATCH
+
+```json
+[
+  {
+    "EntryId": 3079558,
+    "ChoiceLevel1": 3079556
+  },
+  {
+    "EntryId": 3079559,
+    "ChoiceLevel1": [3079556]
+  },
+  {
+    "EntryId": 3079560,
+    "ChoiceLevel1": [3079556, 3079555]
+  }
+]
+```
+
+**Response**
+
+GET
+
+```json
+{
+  "EntryId": 3079558,
+  "ChoiceLevel1": [
+    {
+      "seqNumber": 1,
+      "isAutoPdf": false,
+      "id": 3079556,
+      "name": "One",
+      "entryListId": -6
+    }
+  ]
+}
+```
+
+POST | PATCH
+
+```json
+{
+  "EntryId": 3079558,
+  "ChoiceLevel1": [3079556]
+}
+```
+
+### Number
+
+Number fields are used to store numerical values, the base data type is a double. Number fields are also used to store currencies. When a number field is used to store currencies `ismoney` is set to true
+
+**Schema: Number Field**
+
+```json
+  {
+    "apiName": "Number",
+    "fieldType": 3,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22263,
+    "name": "Number",
+    "entryListId": 22246
+  },
+  {
+    "apiName": "NumberCurrency",
+    "fieldType": 3,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": true,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22266,
+    "name": "Number Currency",
+    "entryListId": 22246
+  },
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22259
+}
+```
+
+POST | PUT
+
+```json
+{
+  "value": 500,
+  "currencyCode": "USD",
+  "ignoreNearDups": true,
+  "entryId": 3079558,
+  "fieldId": 22266
+}
+```
+
+**Response**
+
+```json
+{
+  "entryId": 3079558,
+  "fieldId": 22266,
+  "rowId": 24117502,
+  "isNoData": false,
+  "value": {
+    "amount": 500.0,
+    "currencyCode": "USD"
+  },
+  "requestedCurrencyCode": "RC"
+}
+```
+
+#### Rows
+
+Can not currently set currency code when making requests using the Rows API. Current will be default currency for the field. If you need to set the currency value use the Cells API.
+
+**Request**
+
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=NumberPercentage
+    &fields=Number
+    &fields=NumberCurrency
+    &fields=NumberFileSize
+    &fields=NumberMultiple
+Authorization: {{auth}}
+```
+
+PATCH | POST
+
+```json
+[
+  {
+    "EntryId": 3079558,
+    "NumberPercentage": 30,
+    "NumberCurrency": 600
+  }
+]
+```
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "NumberPercentage": 30.0,
+      "Number": 1000000.0,
+      "NumberCurrency": {
+        "amount": 500.0,
+        "currencyCode": "USD"
+      },
+      "NumberFileSize": 2003.0,
+      "NumberMultiple": 45.0
+    }
+  ]
+}
+```
+
+### Date
+
+Date and DateTime fields are visual presentation only, in the API all Date fields are DateTime. The value is always submitted and stored in UTC time. In the UI the stored DateTime value is converted to the user's local time based on their time zone settings.
+
+**Schema: Date Field**
+
+```json
+  {
+    "apiName": "Date",
+    "fieldType": 4,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22268,
+    "name": "Date",
+    "entryListId": 22246
+  },
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22269
+  }
+]
+```
+
+PUT | POST
+
+```json
+{
+  "storeRequests": [
+    {
+      "value": "2021-05-13T04:00:00Z",
+      "ignoreNearDups": true,
+      "entryId": 3079558,
+      "fieldId": 22269
+    }
+  ]
+}
+```
+
+**Response**
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22269,
+    "rowId": 23798120,
+    "isNoData": false,
+    "value": "2021-05-13T04:00:00Z",
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+**Request**
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=Date
+    &fields=DateTime
+```
+
+PATCH | POST
+
+```json
+[
+  {
+    "EntryId": 3079558,
+    "DateTime": "2021-05-13T04:00:00Z"
+  }
+]
+```
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "Date": "2021-05-13T04:00:00Z",
+      "DateTime": "2021-05-13T04:00:00Z"
+    }
+  ]
+}
+```
+
+### Reference
+
+Reference fields are how you connect objects to each other and establish foreign keys. Reference fields can be configured to join multiple entry types. Reference fields can also allow single or multiple values.
+
+**Schema: Reference Field**
+
+```json
+  {
+    "apiName": "ReferenceMultiple",
+    "fieldType": 5,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": true,
+    "entryLists": [
+      2014,
+      2023
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22271,
+    "name": "Reference Multiple",
+    "entryListId": 22246
+  },
+  {
+    "apiName": "ReferenceSingle",
+    "fieldType": 5,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [
+      2014
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22270,
+    "name": "Reference Single",
+    "entryListId": 22246
+  },
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22271
+  },
+  {
+    "entryId": 3079558,
+    "fieldId": 22270
+  }
+]
+```
+
+PUT | POST
+
+```json
+{
+  "storeRequests": [
+    {
+      "value": [2157503, 1830992, 2460680],
+      "ignoreNearDups": true,
+      "entryId": 3079558,
+      "fieldId": 22271
+    },
+    {
+      "value": 2460680,
+      "ignoreNearDups": true,
+      "entryId": 3079558,
+      "fieldId": 22270
+    }
+  ]
+}
+```
+
+**Response**
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22271,
+    "rowId": 23798140,
+    "isNoData": false,
+    "value": [
+      {
+        "id": 2157503,
+        "name": "ABC Corp",
+        "entryListId": 2014
+      },
+      {
+        "id": 1830992,
+        "name": "Another Company 2",
+        "entryListId": 2014
+      },
+      {
+        "id": 2460680,
+        "name": "API Entry",
+        "entryListId": 2014
+      }
+    ],
+    "requestedCurrencyCode": "RC"
+  },
+  {
+    "entryId": 3079558,
+    "fieldId": 22270,
+    "rowId": 23798139,
+    "isNoData": false,
+    "value": {
+      "id": 1830992,
+      "name": "Another Company 2",
+      "entryListId": 2014
+    },
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+**Request**
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=ReferenceMultiple
+    &fields=ReferenceSingle
+```
+
+PATCH | POST
+
+```json
+[
+    {
+        "EntryId": {{entryId}},
+        "ReferenceMultiple": [2157503, 1830992, 2460680],
+        "ReferenceSingle": 1830992
+    }
+]
+```
+
+PATCH | POST (alternative)
+
+You can alternatively pass in the string value instead of IDs. This request will fail if any of the string values are duplicated as the system will be unable to match. It is recommended to use the numerical Ids whenever possible.
+
+```json
+[
+    {
+        "EntryId": {{entryId}},
+        "ReferenceMultiple": ["ABC Corp", "API Entry"],
+        "ReferenceSingle": "Another Company 2"
+    }
+]
+```
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "ReferenceMultiple": [
+        {
+          "type": 0,
+          "id": 2157503,
+          "name": "ABC Corp",
+          "entryListId": 2014
+        },
+        {
+          "type": 0,
+          "id": 1830992,
+          "name": "Another Company 2",
+          "entryListId": 2014
+        },
+        {
+          "type": 0,
+          "id": 2460680,
+          "name": "API Entry",
+          "entryListId": 2014
+        }
+      ],
+      "ReferenceSingle": [
+        {
+          "type": 0,
+          "id": 2460680,
+          "name": "API Entry",
+          "entryListId": 2014
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Boolean
+
+Boolean fields are used to store true/false values.
+
+**Schema: Boolean Field**
+
+```json
+{
+    "apiName": "YesOrNo",
+    "fieldType": 6,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22272,
+    "name": "Yes Or No",
+    "entryListId": 22246
+  },
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+[
+    {
+        "entryId": {{entryId}},
+        "fieldId": 22272
+    }
+]
+```
+
+PUT | POST
+
+```json
+{
+  "storeRequests": [
+    {
+      "value": true,
+      "ignoreNearDups": true,
+      "entryId": {{entryId}},
+      "fieldId": 22272
+    }
+  ]
+}
+```
+
+**Response**
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22272,
+    "rowId": 24166641,
+    "isNoData": false,
+    "value": true,
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+**Request**
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=YesOrNo
+```
+
+PATCH | POST
+
+```json
+[
+    {
+        "EntryId": {{entryId}},
+        "YesOrNo": true
+    }
+]
+```
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "YesOrNo": true
+    }
+  ]
+}
+```
+
+### User
+
+User fields are used to create references to users.
+
+**Schema: User Field**
+
+```json
+{
+    "apiName": "UserMultiple",
+    "fieldType": 7,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": true,
+    "entryLists": [
+      2032
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22274,
+    "name": "User Multiple",
+    "entryListId": 22246
+  },
+  {
+    "apiName": "UserSingle",
+    "fieldType": 7,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [
+      2032
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22273,
+    "name": "User Single",
+    "entryListId": 22246
+  },
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+[
+    {
+        "entryId": {{entryId}},
+        "fieldId": 22273
+    },
+    {
+        "entryId": {{entryId}},
+        "fieldId": 22274
+    }
+]
+```
+
+PUT | POST
+
+```json
+{
+  "storeRequests": [
+    {
+      "value": 6045,
+      "ignoreNearDups": true,
+      "entryId": {{entryId}},
+      "fieldId": 22273
+    },
+    {
+      "value": [6045, 2411,1198],
+      "ignoreNearDups": true,
+      "entryId": {{entryId}},
+      "fieldId": 22274
+    }
+  ]
+}
+```
+
+**Response**
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22273,
+    "rowId": 23798122,
+    "isNoData": false,
+    "value": {
+      "url": "mailto:aau@dealcloud.com",
+      "id": 6045,
+      "name": "Alex Au",
+      "entryListId": -1
+    },
+    "requestedCurrencyCode": "RC"
+  },
+  {
+    "entryId": 3079558,
+    "fieldId": 22274,
+    "rowId": 24166643,
+    "isNoData": false,
+    "value": [
+      {
+        "url": "mailto:adeer@dealcloud.com",
+        "id": 2411,
+        "name": "Andrew Dnier",
+        "entryListId": -1
+      },
+      {
+        "url": "mailto:aders@dealcloud.com",
+        "id": 1198,
+        "name": "Alexander Bers",
+        "entryListId": -1
+      },
+      {
+        "url": "mailto:aau@dealcloud.com",
+        "id": 6045,
+        "name": "Alex Au",
+        "entryListId": -1
+      }
+    ],
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+**Request**
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=UserMultiple&fields=UserSingle
+Authorization: {{auth}}
+```
+
+PATCH | POST
+
+```json
+[
+    {
+        "EntryId": {{entryId}},
+        "UserSingle": 6045,
+        "UserMultiple": [6045, 2411,1198]
+    }
+]
+```
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "UserMultiple": [
+        {
+          "url": "mailto:adeer@dealcloud.com",
+          "type": 0,
+          "id": 2411,
+          "name": "Andrew Dnier",
+          "entryListId": -1
+        },
+        {
+          "url": "mailto:aders@dealcloud.com",
+          "type": 0,
+          "id": 1198,
+          "name": "Alexander Bers",
+          "entryListId": -1
+        },
+        {
+          "url": "mailto:aau@dealcloud.com",
+          "type": 0,
+          "id": 6045,
+          "name": "Alex Au",
+          "entryListId": -1
+        }
+      ],
+      "UserSingle": [
+        {
+          "url": "mailto:aau@dealcloud.com",
+          "type": 0,
+          "id": 6045,
+          "name": "Alex Au",
+          "entryListId": -1
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Binary
+
+Binary fields exists only on two entry types (Attachment and Document). When you create an attachment field on any other entry type (ie. contact, company, email, etc..) the attachment field is represented as a reference field to the attachment list.
+
+When attempting to upload a binary object to an attachment field:
+
+1. Upload to Attachment List
+2. Capture Entry Id of uploaded object(s)
+3. Pass Entry Id as reference to the Attachment Reference field on the record that owns the attachment.
+
+Below are schema field description of both the attachment field and an actual binary field. Note that the attachment field is listed as `fieldType 5`, this is a clear indicator that this field functions the same as a reference field.
+
+**Schema: Attachment Field**
+
+```json
+{
+  "apiName": "Attachment",
+  "fieldType": 5,
+  "isRequired": false,
+  "allowDuplicates": true,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": true,
+  "entryLists": [2010],
+  "systemFieldType": 0,
+  "isKey": false,
+  "isCalculated": false,
+  "isAttachment": true,
+  "isStoreRequestSupported": true,
+  "id": 22281,
+  "name": "Attachment",
+  "entryListId": 22246
+}
+```
+
+**Schema: Binary Field**
+
+Here is the full schema of the Attachment object. These fields are important
+
+| Name  | Description                                                                                          |
+| ----- | ---------------------------------------------------- |
+| Title | Name of the binary filed you're attempting to upload. This is also the primary key of the attachment. When uploading binary this can typically the name of the document without the file extension |
+| Document | This is the actual binary blob |
+| FileType | This is the binary extension without the `.` |
+| Size | This is optional, can be used for hash comparison if provided on post/patch. Will be automatically filled in on successful upload. |
+
+```json
+[
+  {
+    "apiName": "Title",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 9,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2128,
+    "name": "Title",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "Document",
+    "fieldType": 13,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 20,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2129,
+    "name": "Document",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "FileType",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 7,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2126,
+    "name": "File Type",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "Size",
+    "fieldType": 3,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 8,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2127,
+    "name": "Size",
+    "entryListId": 2010
+  }
+]
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```http
+POST {{host}}/api/rest/v4/data/entrydata/get?wrapIntoArrays=true HTTP/1.1
+Content-Type: application/json
+Authorization: {{auth}}
+
+[
+  {
+    "entryId": 2772624,
+    "fieldId": 2211
+  },
+  {
+    "entryId": 2772624,
+    "fieldId": 2212
+  }
+]
+
+```
+
+PUT | POST
+
+```http
+PUT {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="model"
+Content-Type: application/json
+{
+    "binaryStoreRequests": [
+        {
+            "formatType": "jpg",
+            "contentType": "image/jpg",
+            "name": "Headshot.jpg",
+            "entryId": 3045615,
+            "fieldId": 9569
+        }
+    ]
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="attachment"; filename="Headshot.jpg"
+Content-Type: image/jpg
+< ./1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```
+
+**Response**
+
+```http
+HTTP/1.1 200 OK
+[
+  {
+    "entryId": 2772624,
+    "fieldId": 2211,
+    "isNoData": false,
+    "value": {
+      "id": 2772624,
+      "name": "Test Interactions",
+      "entryListId": 2013
+    },
+    "requestedCurrencyCode": "RC"
+  },
+  {
+    "entryId": 2772624,
+    "fieldId": 2212,
+    "rowId": 23555389,
+    "isNoData": false,
+    "value": [
+      {
+        "id": 3043023,
+        "name": "Intapp REST API Guide_20201009.docx",
+        "entryListId": 2010
+      }
+    ],
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+Not supported 
+
+### Counter
+
+**Schema: Counter Field**
+
+```json
+{
+  "apiName": "Incremental",
+  "fieldType": 15,
+  "isRequired": false,
+  "allowDuplicates": true,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": false,
+  "entryLists": [],
+  "systemFieldType": 0,
+  "isKey": false,
+  "isCalculated": false,
+  "isAttachment": false,
+  "isStoreRequestSupported": false,
+  "id": 22275,
+  "name": "Incremental",
+  "entryListId": 22246
+}
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+[
+    {
+        "entryId": {{entryId}},
+        "fieldId": 22275
+    }
+]
+```
+
+PUT | POST
+
+Not Supported
+
+**Response**
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22275,
+    "isNoData": false,
+    "value": 1.000000000000,
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+#### Rows
+
+**Request**
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=Incremental
+```
+
+PATCH | POST
+
+Not Supported
+
+**Response**
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "Incremental": 1.000000000000
+    }
+  ]
+}
+```
+
+### Image
+
+Image fields works much in the same way as binary fields.
+
+**Schema: Image Field**
+
+```json
+[
+  {
+    "apiName": "Image",
+    "fieldType": 16,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": true,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22282,
+    "name": "Image",
+    "entryListId": 22246
+  }
+]
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+When getting image data you must use the binary endpoint, the regular get endpoint will only return a description of the data. 
+
+```json
+[
+  {
+    "entryId": 3079558,
+    "fieldId": 22282,
+    "rowId": 2,
+    "isNoData": false,
+    "value": {
+      "id": 3079558,
+      "name": "oQbtcXJiZco-unsplash.jpg",
+      "entryListId": 0
+    },
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+PUT | POST
+
+```json
+```http
+PUT {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
+Authorization: {{auth}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="model"
+Content-Type: application/json
+{
+    "binaryStoreRequests": [
+        {
+            "formatType": "jpg",
+            "contentType": "image/jpg",
+            "name": "Headshot.jpg",
+            "entryId": 3045615,
+            "fieldId": 9569
+        }
+    ]
+}
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="attachment"; filename="Headshot.jpg"
+Content-Type: image/jpg
+< ./1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+```
+
+
+#### Rows
+
+Not Supported
+
+### Currency
+
+**Schema: Currency Field**
+
+```json
+[
+  {
+    "apiName": "Currency",
+    "fieldType": 18,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 22283,
+    "name": "Currency",
+    "entryListId": 22246
+  }
+]
+```
+
+#### Cells
+
+**Request**
+
+GET
+
+```json
+{
+    "entryId": {{entryId}},
+    "fieldId": 22283
+}
+```
+
+PUT | POST
+
+```json
+[
+  "storeRequests": [
+    {
+      "value": "USD",
+      "ignoreNearDups": true,
+      "entryId": {{entryId}},
+      "fieldId": 22269
+    }
+  ]
+]
+```
+
+**Response**
+
+```json
+  {
+    "entryId": 3079558,
+    "fieldId": 22283,
+    "rowId": 23798124,
+    "isNoData": false,
+    "value": "USD",
+    "requestedCurrencyCode": "RC"
+  }
+```
+
+#### Rows
+
+## Request
+GET
+
+```http
+GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
+    &fields=currency
+```
+
+PATCH | POST
+
+```json
+[
+    {
+        "EntryId": {{entryId}},
+        "Currency": "USD"
+    }
+]
+```
+
+## Response
+
+```json
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 3079558,
+      "Currency": "USD"
+    }
+  ]
+}
+```

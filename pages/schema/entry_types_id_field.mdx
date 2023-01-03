@@ -1,0 +1,88 @@
+## Entry Type Fields
+
+Returns all fields fields for a given entry type. Endpoint will accept both numerical ID and apiNames for entry types.
+## Swagger
+![Entry Type Fields](./entry_type_id_fields.png)
+
+## Params
+
+| name | type | values
+|---| --- | --- |
+|entryTypeId | int / string | 2013 / interaction|
+
+## Request
+
+### Entry Type API Name
+```
+GET {{host}}/api/rest/v4/schema/entrytypes/interaction/fields
+Authorization: {{auth}}
+```
+### Entry Type ID**
+```
+GET {{host}}/api/rest/v4/schema/entrytypes/2013/fields
+Authorization: {{auth}}
+```
+## Response
+```json
+[
+  {
+    "apiName": "Subject",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 9,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2211,
+    "name": "Subject",
+    "entryListId": 2013
+  },
+  {
+    "apiName": "Attachments",
+    "fieldType": 5,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": true,
+    "entryLists": [
+      2010
+    ],
+    "systemFieldType": 10,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": true,
+    "isStoreRequestSupported": true,
+    "id": 2212,
+    "name": "Attachments",
+    "entryListId": 2013
+  },
+  {
+    "apiName": "Companies",
+    "fieldType": 5,
+    "isRequired": false,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": true,
+    "entryLists": [
+      2014
+    ],
+    "systemFieldType": 0,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2196,
+    "name": "Companies",
+    "entryListId": 2013
+  },
+  ...
+]
+```

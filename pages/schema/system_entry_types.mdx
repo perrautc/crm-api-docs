@@ -1,0 +1,131 @@
+# System Entry Types
+
+All entry types can be considered type Entity. However certain entry type provided additional capabilities and workflows. The standard entry types can also be used as a template when generating new entry types, as each entry type has default fields. With the exception of the name field all other fields can be deleted, so it is always best to look at the fields of a given entry type to confirm the actual attributes.
+
+## Swagger
+![System Entry Types](./system_entry_types.png)
+## Params
+
+| name | type | values
+|---| --- | --- |
+| - | - | - |
+
+## Request
+```
+GET {{host}}/api/rest/v4/schema/systementrytypes
+Authorization: {{auth}}
+```
+
+## Response
+```json
+[
+  {
+    "id": 0,
+    "name": "None",
+    "entryListId": 0
+  },
+  {
+    "id": 1,
+    "name": "Entity",
+    "entryListId": 0
+  },
+  {
+    "id": 2,
+    "name": "Relationship",
+    "entryListId": 0
+  },
+  {
+    "id": 3,
+    "name": "Person",
+    "entryListId": 0
+  },
+  {
+    "id": 4,
+    "name": "Activity",
+    "entryListId": 0
+  },
+  {
+    "id": 5,
+    "name": "Document",
+    "entryListId": 0
+  },
+  {
+    "id": 6,
+    "name": "Aggregation",
+    "entryListId": 0
+  },
+  {
+    "id": 7,
+    "name": "Attachment",
+    "entryListId": 0
+  },
+  {
+    "id": 8,
+    "name": "Task",
+    "entryListId": 0
+  },
+  {
+    "id": 9,
+    "name": "Email",
+    "entryListId": 0
+  },
+  {
+    "id": 10,
+    "name": "Contacts",
+    "entryListId": 0
+  },
+  {
+    "id": 11,
+    "name": "Events",
+    "entryListId": 0
+  },
+  {
+    "id": 12,
+    "name": "Companies",
+    "entryListId": 0
+  },
+  {
+    "id": 13,
+    "name": "User",
+    "entryListId": 0
+  },
+  {
+    "id": 14,
+    "name": "Campaigns",
+    "entryListId": 0
+  },
+  {
+    "id": 15,
+    "name": "CampaignGroups",
+    "entryListId": 0
+  },
+  {
+    "id": 16,
+    "name": "MarketingStatistics",
+    "entryListId": 0
+  },
+  {
+    "id": 17,
+    "name": "LandingPages",
+    "entryListId": 0
+  },
+  {
+    "id": 18,
+    "name": "PageViews",
+    "entryListId": 0
+  },
+  {
+    "id": 19,
+    "name": "Sequences",
+    "entryListId": 0
+  },
+  {
+    "id": 21,
+    "name": "ColleagueRelationships",
+    "entryListId": 0
+  }
+]
+```
+
+**Models**
+*Schema FieldType*

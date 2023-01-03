@@ -1,0 +1,691 @@
+# System Field Types
+
+Returns all system field types. System field types are a super set of field types with the guarantee that users cannot modify their names. You are also not able to write data into system fields.
+
+## Swagger
+![System Field Types](./system_field_types.png)
+## Params
+
+None
+
+## Request
+```
+GET {{host}}/api/rest/v4/schema/systemfieldtypes
+Authorization: {{auth}}
+```
+
+## Response
+```json
+[
+  {
+    "id": 0,
+    "name": "None",
+    "entryListId": 0
+  },
+  {
+    "id": 1,
+    "name": "Created",
+    "entryListId": 0
+  },
+  {
+    "id": 2,
+    "name": "CreatedBy",
+    "entryListId": 0
+  },
+  {
+    "id": 3,
+    "name": "Modified",
+    "entryListId": 0
+  },
+  {
+    "id": 4,
+    "name": "ModifiedBy",
+    "entryListId": 0
+  },
+  {
+    "id": 5,
+    "name": "AssignedTo",
+    "entryListId": 0
+  },
+  {
+    "id": 6,
+    "name": "DueDate",
+    "entryListId": 0
+  },
+  {
+    "id": 7,
+    "name": "FileType",
+    "entryListId": 0
+  },
+  {
+    "id": 8,
+    "name": "Size",
+    "entryListId": 0
+  },
+  {
+    "id": 9,
+    "name": "Name",
+    "entryListId": 0
+  },
+  {
+    "id": 10,
+    "name": "Attachment",
+    "entryListId": 0
+  },
+  {
+    "id": 11,
+    "name": "Contact",
+    "entryListId": 0
+  },
+  {
+    "id": 12,
+    "name": "RecipientEmailAddress",
+    "entryListId": 0
+  },
+  {
+    "id": 13,
+    "name": "Date",
+    "entryListId": 0
+  },
+  {
+    "id": 14,
+    "name": "Email",
+    "entryListId": 0
+  },
+  {
+    "id": 15,
+    "name": "StartTime",
+    "entryListId": 0
+  },
+  {
+    "id": 16,
+    "name": "EndTime",
+    "entryListId": 0
+  },
+  {
+    "id": 17,
+    "name": "IsAllDayEvent",
+    "entryListId": 0
+  },
+  {
+    "id": 18,
+    "name": "Body",
+    "entryListId": 0
+  },
+  {
+    "id": 19,
+    "name": "Description",
+    "entryListId": 0
+  },
+  {
+    "id": 20,
+    "name": "Document",
+    "entryListId": 0
+  },
+  {
+    "id": 21,
+    "name": "DocumentType",
+    "entryListId": 0
+  },
+  {
+    "id": 22,
+    "name": "FieldFrom",
+    "entryListId": 0
+  },
+  {
+    "id": 23,
+    "name": "FieldTo",
+    "entryListId": 0
+  },
+  {
+    "id": 24,
+    "name": "FirstName",
+    "entryListId": 0
+  },
+  {
+    "id": 25,
+    "name": "LastName",
+    "entryListId": 0
+  },
+  {
+    "id": 26,
+    "name": "Predecessor",
+    "entryListId": 0
+  },
+  {
+    "id": 27,
+    "name": "Status",
+    "entryListId": 0
+  },
+  {
+    "id": 29,
+    "name": "JobTitle",
+    "entryListId": 0
+  },
+  {
+    "id": 30,
+    "name": "MobilePhone",
+    "entryListId": 0
+  },
+  {
+    "id": 31,
+    "name": "DirectOffice",
+    "entryListId": 0
+  },
+  {
+    "id": 32,
+    "name": "Address",
+    "entryListId": 0
+  },
+  {
+    "id": 34,
+    "name": "City",
+    "entryListId": 0
+  },
+  {
+    "id": 35,
+    "name": "State",
+    "entryListId": 0
+  },
+  {
+    "id": 36,
+    "name": "PostalCode",
+    "entryListId": 0
+  },
+  {
+    "id": 37,
+    "name": "Country",
+    "entryListId": 0
+  },
+  {
+    "id": 38,
+    "name": "Notes",
+    "entryListId": 0
+  },
+  {
+    "id": 39,
+    "name": "Company",
+    "entryListId": 0
+  },
+  {
+    "id": 40,
+    "name": "Owners",
+    "entryListId": 0
+  },
+  {
+    "id": 41,
+    "name": "CoOwners",
+    "entryListId": 0
+  },
+  {
+    "id": 42,
+    "name": "Location",
+    "entryListId": 0
+  },
+  {
+    "id": 43,
+    "name": "InternalAttendees",
+    "entryListId": 0
+  },
+  {
+    "id": 44,
+    "name": "InternalRecepients",
+    "entryListId": 0
+  },
+  {
+    "id": 45,
+    "name": "ReportsGeneratedLast4Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 46,
+    "name": "ReportsGeneratedPrior4Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 47,
+    "name": "ReportsGeneratedLast13Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 48,
+    "name": "ReportsGeneratedPrior13Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 49,
+    "name": "NotificationsGeneratedLast4Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 50,
+    "name": "NotificationsGeneratedPrior4Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 51,
+    "name": "NotificationsGeneratedLast13Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 52,
+    "name": "NotificationsGeneratedPrior13Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 53,
+    "name": "ActiveUsersPrior4Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 54,
+    "name": "ActiveUsersPrior13Weeks",
+    "entryListId": 0
+  },
+  {
+    "id": 55,
+    "name": "IsAPIAccess",
+    "entryListId": 0
+  },
+  {
+    "id": 56,
+    "name": "IsMailChimpImplemented",
+    "entryListId": 0
+  },
+  {
+    "id": 57,
+    "name": "NumberOfEntries",
+    "entryListId": 0
+  },
+  {
+    "id": 58,
+    "name": "NumberOfLists",
+    "entryListId": 0
+  },
+  {
+    "id": 59,
+    "name": "NumberOfFields",
+    "entryListId": 0
+  },
+  {
+    "id": 60,
+    "name": "NumberOfWorkflows",
+    "entryListId": 0
+  },
+  {
+    "id": 61,
+    "name": "NumberOfViews",
+    "entryListId": 0
+  },
+  {
+    "id": 62,
+    "name": "NumberOfDashboards",
+    "entryListId": 0
+  },
+  {
+    "id": 63,
+    "name": "NumberOfTemplateReports",
+    "entryListId": 0
+  },
+  {
+    "id": 64,
+    "name": "NumberOfRecurringTasks",
+    "entryListId": 0
+  },
+  {
+    "id": 65,
+    "name": "EntryId",
+    "entryListId": 0
+  },
+  {
+    "id": 66,
+    "name": "UserGroups",
+    "entryListId": 0
+  },
+  {
+    "id": 67,
+    "name": "UserStatus",
+    "entryListId": 0
+  },
+  {
+    "id": 68,
+    "name": "UserFederationId",
+    "entryListId": 0
+  },
+  {
+    "id": 69,
+    "name": "UserLastLogin",
+    "entryListId": 0
+  },
+  {
+    "id": 70,
+    "name": "SendTime",
+    "entryListId": 0
+  },
+  {
+    "id": 71,
+    "name": "TotalRecipients",
+    "entryListId": 0
+  },
+  {
+    "id": 72,
+    "name": "TotalOpens",
+    "entryListId": 0
+  },
+  {
+    "id": 73,
+    "name": "UniqueOpens",
+    "entryListId": 0
+  },
+  {
+    "id": 74,
+    "name": "DateTimeOfLastOpen",
+    "entryListId": 0
+  },
+  {
+    "id": 75,
+    "name": "OpenRate",
+    "entryListId": 0
+  },
+  {
+    "id": 76,
+    "name": "TotalClicks",
+    "entryListId": 0
+  },
+  {
+    "id": 77,
+    "name": "UniqueClicks",
+    "entryListId": 0
+  },
+  {
+    "id": 78,
+    "name": "DateTimeOfLastClick",
+    "entryListId": 0
+  },
+  {
+    "id": 79,
+    "name": "ClickRate",
+    "entryListId": 0
+  },
+  {
+    "id": 80,
+    "name": "BounceCount",
+    "entryListId": 0
+  },
+  {
+    "id": 81,
+    "name": "BounceRate",
+    "entryListId": 0
+  },
+  {
+    "id": 82,
+    "name": "UnsubscribeCount",
+    "entryListId": 0
+  },
+  {
+    "id": 83,
+    "name": "UnsubscribeRate",
+    "entryListId": 0
+  },
+  {
+    "id": 84,
+    "name": "CampaignGroup",
+    "entryListId": 0
+  },
+  {
+    "id": 85,
+    "name": "Id",
+    "entryListId": 0
+  },
+  {
+    "id": 86,
+    "name": "CanSelect",
+    "entryListId": 0
+  },
+  {
+    "id": 87,
+    "name": "GloballyUnsubscribed",
+    "entryListId": 0
+  },
+  {
+    "id": 88,
+    "name": "SoftBounceCount",
+    "entryListId": 0
+  },
+  {
+    "id": 89,
+    "name": "SoftBounceRate",
+    "entryListId": 0
+  },
+  {
+    "id": 90,
+    "name": "CampaignStatus",
+    "entryListId": 0
+  },
+  {
+    "id": 91,
+    "name": "Bounced",
+    "entryListId": 0
+  },
+  {
+    "id": 92,
+    "name": "TotalDelivered",
+    "entryListId": 0
+  },
+  {
+    "id": 93,
+    "name": "TotalEmailsAttempted",
+    "entryListId": 0
+  },
+  {
+    "id": 94,
+    "name": "TotalEmailsReceived",
+    "entryListId": 0
+  },
+  {
+    "id": 104,
+    "name": "Person",
+    "entryListId": 0
+  },
+  {
+    "id": 105,
+    "name": "DateTimeOfLastCampaignDelivered",
+    "entryListId": 0
+  },
+  {
+    "id": 106,
+    "name": "DateTimeOfLastCampaignAttempted",
+    "entryListId": 0
+  },
+  {
+    "id": 107,
+    "name": "Title",
+    "entryListId": 0
+  },
+  {
+    "id": 108,
+    "name": "PageType",
+    "entryListId": 0
+  },
+  {
+    "id": 109,
+    "name": "Url",
+    "entryListId": 0
+  },
+  {
+    "id": 110,
+    "name": "MetaDescription",
+    "entryListId": 0
+  },
+  {
+    "id": 111,
+    "name": "PageStatus",
+    "entryListId": 0
+  },
+  {
+    "id": 112,
+    "name": "PublishDateTime",
+    "entryListId": 0
+  },
+  {
+    "id": 113,
+    "name": "TotalVisits",
+    "entryListId": 0
+  },
+  {
+    "id": 114,
+    "name": "TotalContactVisits",
+    "entryListId": 0
+  },
+  {
+    "id": 115,
+    "name": "TotalSubmissions",
+    "entryListId": 0
+  },
+  {
+    "id": 116,
+    "name": "ConversionRate",
+    "entryListId": 0
+  },
+  {
+    "id": 120,
+    "name": "LastVisitDate",
+    "entryListId": 0
+  },
+  {
+    "id": 121,
+    "name": "Submitted",
+    "entryListId": 0
+  },
+  {
+    "id": 122,
+    "name": "SubmittedBy",
+    "entryListId": 0
+  },
+  {
+    "id": 123,
+    "name": "SubjectLine",
+    "entryListId": 0
+  },
+  {
+    "id": 124,
+    "name": "FromAddress",
+    "entryListId": 0
+  },
+  {
+    "id": 125,
+    "name": "ReplyToAddress",
+    "entryListId": 0
+  },
+  {
+    "id": 126,
+    "name": "ContactMappedUser",
+    "entryListId": 0
+  },
+  {
+    "id": 127,
+    "name": "CcRecipient",
+    "entryListId": 0
+  },
+  {
+    "id": 130,
+    "name": "SequenceStatus",
+    "entryListId": 0
+  },
+  {
+    "id": 131,
+    "name": "Type",
+    "entryListId": 0
+  },
+  {
+    "id": 132,
+    "name": "Sequence",
+    "entryListId": 0
+  },
+  {
+    "id": 133,
+    "name": "LastSendDate",
+    "entryListId": 0
+  },
+  {
+    "id": 135,
+    "name": "Colleague",
+    "entryListId": 0
+  },
+  {
+    "id": 136,
+    "name": "ColleagueContact",
+    "entryListId": 0
+  },
+  {
+    "id": 137,
+    "name": "RelationshipScore",
+    "entryListId": 0
+  },
+  {
+    "id": 138,
+    "name": "LastQuarterTrend",
+    "entryListId": 0
+  },
+  {
+    "id": 139,
+    "name": "LastSixMonthsTrend",
+    "entryListId": 0
+  },
+  {
+    "id": 140,
+    "name": "LastYearTrend",
+    "entryListId": 0
+  },
+  {
+    "id": 141,
+    "name": "DateTimeOfLastInboundEmail",
+    "entryListId": 0
+  },
+  {
+    "id": 142,
+    "name": "DateTimeOfLastOutboundEmail",
+    "entryListId": 0
+  },
+  {
+    "id": 143,
+    "name": "DateTimeOfLastMeeting",
+    "entryListId": 0
+  },
+  {
+    "id": 144,
+    "name": "DateTimeOfLastDispatchSend",
+    "entryListId": 0
+  },
+  {
+    "id": 145,
+    "name": "FlaggedByListCleanupTool",
+    "entryListId": 0
+  },
+  {
+    "id": 146,
+    "name": "LinkLastUpdatedDate",
+    "entryListId": 0
+  },
+  {
+    "id": 147,
+    "name": "LinkActionMethod",
+    "entryListId": 0
+  },
+  {
+    "id": 148,
+    "name": "LinkActionBy",
+    "entryListId": 0
+  },
+  {
+    "id": 149,
+    "name": "LinkAction",
+    "entryListId": 0
+  },
+  {
+    "id": 150,
+    "name": "LinkActionDate",
+    "entryListId": 0
+  }
+]
+```
