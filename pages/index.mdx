@@ -70,7 +70,7 @@ To generate a token make a request against the /token endpoint. You can pass val
 
 **Request**
 
-```http
+```
 POST {{baseUrl}}/api/rest/v1/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
@@ -110,7 +110,7 @@ Before working with the data it is important to understand the entry types you w
 
 1. Discovering Entry Types. We can see that the site for this example has among its entry types `Campaign Group, Campaign, Company`
 
-```HTTP
+```
 GET {{host}}/api/rest/v4/schema/entryTypes HTTP/1.1
 ```
 
@@ -153,13 +153,13 @@ GET {{host}}/api/rest/v4/schema/entryTypes HTTP/1.1
 
 **Using id**
 
-```HTTP
+```
 GET {{host}}/api/rest/v4/schema/entryTypes/2014/fields HTTP/1.1
 ```
 
 **Using apiName**
 
-```HTTP
+```
 GET {{host}}/api/rest/v4/schema/entryTypes/company/fields HTTP/1.1
 ```
 
@@ -261,7 +261,7 @@ The key thing to know right now is that you're not able to write to calculated f
 
 When creating a new entry you must provide a invalid EntryId, the best strategy is to use negative numbers, as valid EntryId are always positive integers. Both calls below are equivalent, when working with data you can either work with them using key-value pairs or as row objects. When working with key-value pairs, you must use the integer id for `fields`
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
 Authorization: {{auth}}
 Content-Type: application/json
@@ -273,7 +273,7 @@ Content-Type: application/json
 }]
 ```
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}}
 Content-Type: application/json
 Authorization: {{auth}}
@@ -300,7 +300,7 @@ Authorization: {{auth}}
 
 Both method of working with data support bulk operations. The rows method allows for up to 1000 entries to be created at once, while the cells method allows for up to 10_000 fields to be updated at a time. When working with a batch you're able to create references within a batch, so for example if `New Company` is the parent company of `New Company 2` you're able to create a reference using the batch ids if the data is not yet persisted in the database.
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
 Authorization: {{auth}}
 Content-Type: application/json
@@ -318,7 +318,7 @@ Content-Type: application/json
 }]
 ```
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}}
 Content-Type: application/json
 Authorization: {{auth}}
@@ -368,11 +368,11 @@ The only difference between creating and updating entries is that when you updat
 
 Reading information works much the same way as creating and updating information. In the `cells` api you must specify the entries and fields you wish to return, in the `rows` api you can specify this information. Omitting this information returns all data.
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}}
 ```
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/get
 ?wrapIntoArrays=true
 Content-Type: application/json
@@ -397,7 +397,7 @@ Filtering is a complex subject a full write up can be seen in the filtering sect
 
 When working with binary files you have to use the cells API. The fieldId used in the binaryStoreRequest should be of type 13 or 16.
 
-```http
+```
 POST {{baseUrl}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
 Authorization: {{auth}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
