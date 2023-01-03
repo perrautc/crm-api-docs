@@ -10,7 +10,7 @@ Returns all field types supported by the system. When working with the API you m
 
 **Request**
 
-```http
+```
 GET {{host}}/api/rest/v4/schema/fieldtypes
 Authorization: {{auth}}
 ```
@@ -526,7 +526,7 @@ Can not currently set currency code when making requests using the Rows API. Cur
 
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=NumberPercentage
     &fields=Number
@@ -646,7 +646,7 @@ PUT | POST
 **Request**
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=Date
     &fields=DateTime
@@ -816,7 +816,7 @@ PUT | POST
 **Request**
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=ReferenceMultiple
     &fields=ReferenceSingle
@@ -966,7 +966,7 @@ PUT | POST
 **Request**
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=YesOrNo
 ```
@@ -1137,7 +1137,7 @@ PUT | POST
 **Request**
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=UserMultiple&fields=UserSingle
 Authorization: {{auth}}
@@ -1329,7 +1329,7 @@ Here is the full schema of the Attachment object. These fields are important
 
 GET
 
-```http
+```
 POST {{host}}/api/rest/v4/data/entrydata/get?wrapIntoArrays=true HTTP/1.1
 Content-Type: application/json
 Authorization: {{auth}}
@@ -1349,7 +1349,7 @@ Authorization: {{auth}}
 
 PUT | POST
 
-```http
+```
 PUT {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
 Authorization: {{auth}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -1376,7 +1376,7 @@ Content-Type: image/jpg
 
 **Response**
 
-```http
+```
 HTTP/1.1 200 OK
 [
   {
@@ -1474,7 +1474,7 @@ Not Supported
 **Request**
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=Incremental
 ```
@@ -1554,7 +1554,7 @@ When getting image data you must use the binary endpoint, the regular get endpoi
 PUT | POST
 
 ```json
-```http
+```
 PUT {{host}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
 Authorization: {{auth}}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
@@ -1657,7 +1657,7 @@ PUT | POST
 ## Request
 GET
 
-```http
+```
 GET {{host}}/api/rest/v4/data/entrydata/rows/allfield?wrapIntoArrays=true
     &fields=currency
 ```
