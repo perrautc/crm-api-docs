@@ -24,28 +24,30 @@ Requests to the token API are limited to 30 calls per hour per user.
 ## Examples
 ### HTTP
 
-**Request**
+<Tabs items={['request', 'response']}>
+  <Tab>
+    ```
+    POST {baseUrl}/api/rest/v1/oauth/token
+    Content-Type: application/x-www-form-urlencoded
 
-```
-POST {baseUrl}/api/rest/v1/oauth/token
-Content-Type: application/x-www-form-urlencoded
+    scope=data
+    &grant_type=client_credentials
+    &client_id=106
+    &client_secret=1356GYNU
+    ```
+  </Tab>
+  <Tab>
+    ```
+    {
+      "access_token": "eyJhbGciOiJIUzI1NiI...",
+      "token_type": "bearer",
+      "expires_in": 1199,
+      "refresh_token": "eyJhbGciOiJIUzI1Ni..."
+    }
+    ```
+  </Tab>
+</Tabs>
 
-scope=data
-&grant_type=client_credentials
-&client_id=106
-&client_secret=1356GYNU
-```
-
-**Response**
-
-```
-{
-  "access_token": "eyJhbGciOiJIUzI1NiI...",
-  "token_type": "bearer",
-  "expires_in": 1199,
-  "refresh_token": "eyJhbGciOiJIUzI1Ni..."
-}
-```
 ## Code Snippets
 Code snippets from popular programming languages.
 ### C#
