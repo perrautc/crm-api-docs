@@ -6,7 +6,7 @@ const config: DocsThemeConfig = {
   project: {
     link: 'https://github.com/perrautc/crm-api-docs',
   },
-  docsRepositoryBase: 'https://github.com/perrautc/crm-api-docs',
+  docsRepositoryBase: 'https://github.com/perrautc/crm-api-docs/blob/main',
   footer: {
     text: 'CRM API Docs',
   },
