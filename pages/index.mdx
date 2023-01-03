@@ -34,7 +34,7 @@ There are a few items needed before you can use the REST API.
 | 4    | Enable API key for the API user                                  | Tools > User Management, Edit User, Enable API Key                                                               |
 | 5    | Copy the API key                                                 | Copy API Key to clipboard                                                                                        |
 | 6    | Get your Base URL                                                | Base URL will be https://schema.dealcloud.com / https://schema.dealcloud.eu / https://schema.oneplace.intapp.com |
-| 7    | Access Swagger                                                   | https://{{baseurl}}/swagger                                                                                      |
+| 7    | Access Swagger                                                   | https://`baseurl`/swagger                                                                                      |
 
 Table: Steps to Enable API
 
@@ -75,7 +75,7 @@ To generate a token make a request against the /token endpoint. You can pass val
 **Request**
 
 ```
-POST {{baseUrl}}/api/rest/v1/oauth/token
+POST {baseUrl}/api/rest/v1/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
 scope=data
@@ -402,8 +402,8 @@ Filtering is a complex subject a full write up can be seen in the filtering sect
 When working with binary files you have to use the cells API. The fieldId used in the binaryStoreRequest should be of type 13 or 16.
 
 ```
-POST {{baseUrl}}/api/rest/v4/data/entrydata/{{entryTypeId}} HTTP/1.1
-Authorization: {{auth}}
+POST {baseUrl}/api/rest/v4/data/entrydata/{entryTypeId} HTTP/1.1
+Authorization: {auth}
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="model"
