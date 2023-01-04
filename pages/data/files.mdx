@@ -1,0 +1,260 @@
+# Files
+
+Returns binary data. Sometime you need to export binary data from the system, these can be images, documents, etc... This endpoint take the Entry Id and field Id. The field Id refers to the field where the binary data is stored. When looking at the schema for a given entry type binary data can only be stored in field types binary (13) or photo (16). With the exception of photos, all binaries are stored on either the Documents list or the Attachments list.
+## Swagger
+![Swagger](./entry_files.png)
+## Params
+
+| name    | Parameter type | Data Type | values |
+| ------- | -------------- | --------- | ------ |
+| entryId | Path           | int       | 2013   |
+| fieldId | Path           | int       | 1232   |
+
+---
+
+### Downloading Attachments
+
+**Example Attachment Field**
+
+```json
+{
+  "apiName": "Attachments",
+  "fieldType": 5,
+  "isRequired": false,
+  "allowDuplicates": true,
+  "warnOnNearDuplicates": false,
+  "isMoney": false,
+  "isMultiSelect": true,
+  "entryLists": [2010],
+  "systemFieldType": 10,
+  "isKey": false,
+  "isCalculated": false,
+  "isAttachment": true,
+  "isStoreRequestSupported": true,
+  "id": 2212,
+  "name": "Attachments",
+  "entryListId": 2013
+}
+```
+
+This is an example of a attachment field. The data is stored on the attachment list(2010) and is referenced by this field. When attempting to download a file from this list the initial call will return the entry ID of the attachment, you will need to lookup the attachment list to get the field Id where the binary is stored.
+
+**Example Attachment List**
+
+```json
+[
+  {
+    "apiName": "Title",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 9,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2128,
+    "name": "Title",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "Document",
+    "fieldType": 13,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 20,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2129,
+    "name": "Document",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "FileType",
+    "fieldType": 1,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 7,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2126,
+    "name": "File Type",
+    "entryListId": 2010
+  },
+  {
+    "apiName": "Size",
+    "fieldType": 3,
+    "isRequired": true,
+    "allowDuplicates": true,
+    "warnOnNearDuplicates": false,
+    "isMoney": false,
+    "isMultiSelect": false,
+    "entryLists": [],
+    "systemFieldType": 8,
+    "isKey": false,
+    "isCalculated": false,
+    "isAttachment": false,
+    "isStoreRequestSupported": true,
+    "id": 2127,
+    "name": "Size",
+    "entryListId": 2010
+  },
+...
+]
+```
+
+## Cells API
+
+Call the Get Data API, request data for the entry and the attachment field. Because a entry can have 1 or more attachments I set the parameter _wrapIntoArrays_ to true to improve the consistency of the returned data.
+
+```
+POST {{host}}/api/rest/v4/data/entrydata/get?wrapIntoArrays=true HTTP/1.1
+Content-Type: application/json
+Authorization: {{auth}}
+
+[
+  {
+    "entryId": 2772624,
+    "fieldId": 2211
+  },
+  {
+    "entryId": 2772624,
+    "fieldId": 2212
+  }
+]
+
+```
+
+The call was successful. We can see that entry 2772624 has 1 attachment with an ID of 3043023
+
+```
+HTTP/1.1 200 OK
+[
+  {
+    "entryId": 2772624,
+    "fieldId": 2211,
+    "isNoData": false,
+    "value": {
+      "id": 2772624,
+      "name": "Test Interactions",
+      "entryListId": 2013
+    },
+    "requestedCurrencyCode": "RC"
+  },
+  {
+    "entryId": 2772624,
+    "fieldId": 2212,
+    "rowId": 23555389,
+    "isNoData": false,
+    "value": [
+      {
+        "id": 3043023,
+        "name": "Intapp REST API Guide_20201009.docx",
+        "entryListId": 2010
+      }
+    ],
+    "requestedCurrencyCode": "RC"
+  }
+]
+```
+
+## Rows API
+The same can be accomplished with the rows API.
+
+```
+GET {{host}}/api/rest/v4/data/entrydata/rows/{{entryTypeId}} HTTP/1.1
+    ?query={"EntryId": 2772624}
+    &fields=Subject
+    &fields=Attachments
+    &wrapIntoArrays=true
+Authorization: {{auth}}
+
+```
+
+**Response**
+
+```
+HTTP/1.1 200 OK
+{
+  "totalRecords": 1,
+  "rows": [
+    {
+      "EntryId": 2772624,
+      "Subject": {
+        "type": 0,
+        "id": 2772624,
+        "name": "Test Interactions",
+        "entryListId": 2013
+      },
+      "Attachments": [
+        {
+          "type": 0,
+          "id": 3043023,
+          "name": "Intapp REST API Guide_20201009.docx",
+          "entryListId": 2010
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Downloading File
+Once you have the ID of the attachment(s) and know the Document/binary field on the attachment list you can request the binary data.
+
+```
+GET {{host}}/api/rest/v4/data/entryfiles/{{entryId}}/fields/{{fieldId}} HTTP/1.1
+```
+
+Note the entry ID is the value returned, but the field ID is the binary field from the attachments list.
+
+```
+GET {{host}}/api/rest/v4/data/entryfiles/3043023/fields/2129 HTTP/1.1
+```
+
+**Response**
+
+```
+HTTP/1.1 200 OK
+Content-Length: 245829
+Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document
+Content-Disposition: attachment; filename="REST API Guide_20201009.docx"; filename*=utf-8''REST%20API%20Guide_20201009.docx; size=245829
+```
+
+**Errors**
+The following errors are possible.
+
+1. If use the field ID from the reference list instead of the attachment list you'll get this error.
+
+```
+HTTP/1.1 400 Bad Request
+{
+  "message": "Field with Id \"2302\" does not exist"
+}
+```
+
+2. If you use a field ID from the attachment list but not the field ID of the binary field. The binary field call called document and is field Type 13.
+
+```
+HTTP/1.1 404 Not Found
+{
+  "message": "File not found"
+}
+```
+
