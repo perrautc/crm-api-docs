@@ -12,9 +12,9 @@ Returns binary data. Sometime you need to export binary data from the system, th
 
 ---
 
-### Downloading Attachments
+## Attachments
 
-**Example Attachment Field**
+### Attachment Field
 
 ```json
 {
@@ -39,7 +39,7 @@ Returns binary data. Sometime you need to export binary data from the system, th
 
 This is an example of a attachment field. The data is stored on the attachment list(2010) and is referenced by this field. When attempting to download a file from this list the initial call will return the entry ID of the attachment, you will need to lookup the attachment list to get the field Id where the binary is stored.
 
-**Example Attachment List**
+### Example Attachment List
 
 ```json
 [
@@ -143,8 +143,7 @@ Authorization: {{auth}}
 
 The call was successful. We can see that entry 2772624 has 1 attachment with an ID of 3043023
 
-```
-HTTP/1.1 200 OK
+```json
 [
   {
     "entryId": 2772624,
@@ -189,8 +188,7 @@ Authorization: {{auth}}
 
 **Response**
 
-```
-HTTP/1.1 200 OK
+```json
 {
   "totalRecords": 1,
   "rows": [
