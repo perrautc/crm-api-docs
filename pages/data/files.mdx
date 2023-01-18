@@ -1,8 +1,11 @@
 # Files
 
 Returns binary data. Sometime you need to export binary data from the system, these can be images, documents, etc... This endpoint take the Entry Id and field Id. The field Id refers to the field where the binary data is stored. When looking at the schema for a given entry type binary data can only be stored in field types binary (13) or photo (16). With the exception of photos, all binaries are stored on either the Documents list or the Attachments list.
+
 ## Swagger
+
 ![Swagger](./entry_files.png)
+
 ## Params
 
 | name    | Parameter type | Data Type | values |
@@ -14,7 +17,11 @@ Returns binary data. Sometime you need to export binary data from the system, th
 
 ## Attachments
 
+All Binaries are stored in a special list called attachments. To upload and download files you need to learn to work with the attachment lists.
+
 ### Attachment Field
+
+This is an example of a attachment field. The data is stored on the attachment list(2010) and is referenced by this field. When attempting to download a file from this list the initial call will return the entry ID of the attachment, you will need to lookup the attachment list to get the field Id where the binary is stored.
 
 ```json
 {
@@ -36,8 +43,6 @@ Returns binary data. Sometime you need to export binary data from the system, th
   "entryListId": 2013
 }
 ```
-
-This is an example of a attachment field. The data is stored on the attachment list(2010) and is referenced by this field. When attempting to download a file from this list the initial call will return the entry ID of the attachment, you will need to lookup the attachment list to get the field Id where the binary is stored.
 
 ### Example Attachment List
 
@@ -174,6 +179,7 @@ The call was successful. We can see that entry 2772624 has 1 attachment with an 
 ```
 
 ## Rows API
+
 The same can be accomplished with the rows API.
 
 ```
@@ -214,6 +220,7 @@ Authorization: {{auth}}
 ```
 
 ## Downloading File
+
 Once you have the ID of the attachment(s) and know the Document/binary field on the attachment list you can request the binary data.
 
 ```
@@ -255,4 +262,3 @@ HTTP/1.1 404 Not Found
   "message": "File not found"
 }
 ```
-
