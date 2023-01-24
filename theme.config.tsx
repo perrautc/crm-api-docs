@@ -2,7 +2,7 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span><svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 361 70" height="20">
+  logo: <span><svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 361 70" width="70" height="20">
 	<title>intapp_logo_slate-svg</title>
 	<path id="Layer" className="s0" d="m1296.9 61.2h179.5q-13.8-9.5-28.1-18.1q-14.3-8.6-29.1-16.3q-14.8-7.7-30.1-14.4q-15.3-6.7-31-12.4h300.9v298.4q-5.6-15.5-12.3-30.6q-6.6-15.1-14.3-29.7q-7.7-14.6-16.3-28.6q-8.7-14-18.4-27.4v177.9c-44.4-136.4-173.1-259-300.8-298.8z" />
 	<path id="Layer" className="s1" d="m1599.1 61.2v120.9q-12.5-17.6-26.5-34q-14-16.5-29.3-31.7q-15.3-15.2-31.9-29q-16.5-13.8-34.2-26.2z" />
